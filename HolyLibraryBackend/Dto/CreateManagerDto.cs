@@ -1,10 +1,9 @@
-namespace HolyLibraryBackend.Dto
+﻿namespace HolyLibraryBackend.Dto
 {
-    public class CreateUserDto
+    public class CreateManagerDto
     {
         public string Account { get; set; }
         public string Password { get; set; }
         public string Name { get; set; }
-        public string Email { get; set; }
     }
 }

@@ -17,14 +17,16 @@ namespace HolyLibraryBackend.Controllers
         }
 
         [HttpPost("reader")]
-        public User CreateReader(CreateUserDto createUserDto)
+        public User CreateReader(CreateReaderDto createReaderDto)
         {
             var user = new Reader
             {
-                Account = createUserDto.Account,
-                Password = createUserDto.Password,
-                Name = createUserDto.Name,
-                Email = createUserDto.Email,
+                Account = createReaderDto.Account,
+                Password = createReaderDto.Password,
+                Name = createReaderDto.Name,
+                Email = createReaderDto.Email,
+                PhoneNumber = createReaderDto.PhoneNumber,
+                MaxBorrowNumber = createReaderDto.MaxBorrowNumber,
             };
             holyLibraryContext.Add(user);
             holyLibraryContext.SaveChanges();
@@ -32,14 +34,13 @@ namespace HolyLibraryBackend.Controllers
         }
 
         [HttpPost("manager")]
-        public User CreateManager(CreateUserDto createUserDto)
+        public User CreateManager(CreateManagerDto createManagerDto)
         {
             var user = new Manager
             {
-                Account = createUserDto.Account,
-                Password = createUserDto.Password,
-                Name = createUserDto.Name,
-                Email = createUserDto.Email,
+                Account = createManagerDto.Account,
+                Password = createManagerDto.Password,
+                Name = createManagerDto.Name,
             };
             holyLibraryContext.Add(user);
             holyLibraryContext.SaveChanges();
