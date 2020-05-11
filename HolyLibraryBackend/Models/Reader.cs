@@ -15,5 +15,15 @@ namespace HolyLibraryBackend.Models
             collection.Borrower = this;
             return true;
         }
+
+        public override bool ReturnCollection(Collection collection)
+        {
+            if (collection.Borrower != this)
+            {
+                return false;
+            }
+            collection.Borrower = null;
+            return true;
+        }
     }
 }

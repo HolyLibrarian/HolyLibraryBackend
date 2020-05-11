@@ -11,5 +11,10 @@ namespace HolyLibraryBackend.Models
         {
             return false;
         }
+
+        public virtual bool ReturnCollection(Collection collection)
+        {
+            return false;
+        }
     }
 }
