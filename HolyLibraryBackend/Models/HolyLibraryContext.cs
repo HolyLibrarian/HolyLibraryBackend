@@ -12,5 +12,6 @@ namespace HolyLibraryBackend.Models
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Collection> Collections { get; set; }
         public DbSet<BorrowRecord> BorrowRecords { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
     }
 }
