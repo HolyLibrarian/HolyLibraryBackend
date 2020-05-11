@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace HolyLibraryBackend.Test
 {
-    public class Tests
+    public class SampleTest
     {
         [SetUp]
         public void Setup()
