@@ -16,7 +16,7 @@ namespace HolyLibraryBackend.Controllers
         }
 
         [HttpPost]
-        public Manager CreateManager(CreateManagerDto createManagerDto)
+        public IActionResult CreateManager(CreateManagerDto createManagerDto)
         {
             var manager = new Manager
             {
@@ -26,7 +26,7 @@ namespace HolyLibraryBackend.Controllers
             };
             dbContext.Add(manager);
             dbContext.SaveChanges();
-            return manager;
+            return Created(manager.Id.ToString(), manager);
         }
     }
 }

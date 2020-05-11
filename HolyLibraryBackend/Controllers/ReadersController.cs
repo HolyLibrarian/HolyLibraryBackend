@@ -16,7 +16,7 @@ namespace HolyLibraryBackend.Controllers
         }
 
         [HttpPost]
-        public Reader CreateReader(CreateReaderDto createReaderDto)
+        public IActionResult CreateReader(CreateReaderDto createReaderDto)
         {
             var reader = new Reader
             {
@@ -29,7 +29,7 @@ namespace HolyLibraryBackend.Controllers
             };
             dbContext.Add(reader);
             dbContext.SaveChanges();
-            return reader;
+            return Created(reader.Id.ToString(), reader);
         }
     }
 }
