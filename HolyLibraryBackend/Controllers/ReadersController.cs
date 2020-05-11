@@ -1,5 +1,6 @@
 ﻿using HolyLibraryBackend.Dto;
 using HolyLibraryBackend.Models;
+using Isopoh.Cryptography.Argon2;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HolyLibraryBackend.Controllers
@@ -21,7 +22,7 @@ namespace HolyLibraryBackend.Controllers
             var reader = new Reader
             {
                 Account = createReaderDto.Account,
-                Password = createReaderDto.Password,
+                Password = Argon2.Hash(createReaderDto.Password),
                 Name = createReaderDto.Name,
                 Email = createReaderDto.Email,
                 PhoneNumber = createReaderDto.PhoneNumber,

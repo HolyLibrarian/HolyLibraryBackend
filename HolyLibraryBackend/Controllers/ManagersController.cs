@@ -1,5 +1,6 @@
 ﻿using HolyLibraryBackend.Dto;
 using HolyLibraryBackend.Models;
+using Isopoh.Cryptography.Argon2;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HolyLibraryBackend.Controllers
@@ -21,7 +22,7 @@ namespace HolyLibraryBackend.Controllers
             var manager = new Manager
             {
                 Account = createManagerDto.Account,
-                Password = createManagerDto.Password,
+                Password = Argon2.Hash(createManagerDto.Password),
                 Name = createManagerDto.Name,
             };
             dbContext.Add(manager);
