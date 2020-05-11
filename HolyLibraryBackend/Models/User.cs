@@ -6,5 +6,10 @@ namespace HolyLibraryBackend.Models
         public string Account { get; set; }
         public string Password { get; set; }
         public string Name { get; set; }
+
+        public virtual bool BorrowCollection(Collection collection)
+        {
+            return false;
+        }
     }
 }
