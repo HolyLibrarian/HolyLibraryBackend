@@ -1,6 +1,6 @@
 namespace HolyLibraryBackend.Models
 {
-    public class User
+    public abstract class User
     {
         public int Id { get; set; }
         public string Account { get; set; }

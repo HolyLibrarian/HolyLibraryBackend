@@ -16,13 +16,28 @@ namespace HolyLibraryBackend.Controllers
             this.holyLibraryContext = holyLibraryContext;
         }
 
-        [HttpPost]
-        public User CreateUser(CreateUserDto createUserDto)
+        [HttpPost("reader")]
+        public User CreateReader(CreateUserDto createUserDto)
         {
-            var user = new User
+            var user = new Reader
             {
                 Account = createUserDto.Account,
-                Password = createUserDto.Pasword,
+                Password = createUserDto.Password,
+                Name = createUserDto.Name,
+                Email = createUserDto.Email,
+            };
+            holyLibraryContext.Add(user);
+            holyLibraryContext.SaveChanges();
+            return user;
+        }
+
+        [HttpPost("manager")]
+        public User CreateManager(CreateUserDto createUserDto)
+        {
+            var user = new Manager
+            {
+                Account = createUserDto.Account,
+                Password = createUserDto.Password,
                 Name = createUserDto.Name,
                 Email = createUserDto.Email,
             };
