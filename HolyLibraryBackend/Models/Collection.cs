@@ -10,5 +10,10 @@ namespace HolyLibraryBackend.Models
         public int Price { get; set; }
         public string Location { get; set; }
         public User Borrower { get; set; }
+
+        public bool IsBorrowed()
+        {
+            return Borrower != null;
+        }
     }
 }
