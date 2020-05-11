@@ -9,5 +9,6 @@ namespace HolyLibraryBackend.Models
         public string Publisher { get; set; }
         public int Price { get; set; }
         public string Location { get; set; }
+        public User Borrower { get; set; }
     }
 }
