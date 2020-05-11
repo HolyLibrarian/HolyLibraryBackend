@@ -8,6 +8,8 @@ namespace HolyLibraryBackend.Models
          : base(options) { }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Reader> Readers { get; set; }
+        public DbSet<Manager> Managers { get; set; }
         public DbSet<Collection> Collections { get; set; }
     }
 }
