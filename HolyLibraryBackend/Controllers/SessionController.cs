@@ -1,8 +1,14 @@
+using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using HolyLibraryBackend.Dto;
 using HolyLibraryBackend.Models;
 using Isopoh.Cryptography.Argon2;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace HolyLibraryBackend.Controllers
 {
@@ -32,10 +38,25 @@ namespace HolyLibraryBackend.Controllers
                 return Unauthorized();
             }
 
+            var claims = new[]
+            {
+                new Claim("sub", user.Id.ToString())
+            };
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("qcerhNduEegmMYnxYqy9wgXu"));
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var token = new JwtSecurityToken("", "", claims, expires: DateTime.Now.AddMinutes(86400), signingCredentials: credentials);
+
             return Created("", new
             {
-                Jwt = "878787",
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
             });
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult GetSession()
+        {
+            return Ok();
         }
     }
 }
