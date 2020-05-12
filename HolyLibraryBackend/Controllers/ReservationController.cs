@@ -8,7 +8,7 @@ namespace HolyLibraryBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ReservationController
+    public class ReservationController : ControllerBase
     {
         private readonly HolyLibraryContext holyLibraryContext;
 
@@ -22,8 +22,8 @@ namespace HolyLibraryBackend.Controllers
         {
             var reservation = new Reservation
             {
-                User = holyLibraryContext.Users.Where(user => user.Id == createReservationDto.UserId).First(),
-                Collection = holyLibraryContext.Collections.Where(collection => collection.Id == createReservationDto.CollectionId).First(),
+                User = holyLibraryContext.Users.Where(x => x.Id == createReservationDto.UserId).FirstOrDefault(),
+                Collection = holyLibraryContext.Collections.Where(x => x.Id == createReservationDto.CollectionId).FirstOrDefault(),
                 CreateTime = new DateTime(),
                 ExpireTime = new DateTime(),
             };

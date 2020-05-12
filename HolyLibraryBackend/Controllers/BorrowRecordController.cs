@@ -8,7 +8,7 @@ namespace HolyLibraryBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class BorrowRecordController
+    public class BorrowRecordController : ControllerBase
     {
         private readonly HolyLibraryContext holyLibraryContext;
 
@@ -22,8 +22,8 @@ namespace HolyLibraryBackend.Controllers
         {
             var borrowRecord = new BorrowRecord
             {
-                User = holyLibraryContext.Users.Where(user => user.Id == createBorrowRecordDto.UserId).First(),
-                Collection = holyLibraryContext.Collections.Where(collection => collection.Id == createBorrowRecordDto.CollectionId).First(),
+                User = holyLibraryContext.Users.Where(x => x.Id == createBorrowRecordDto.UserId).FirstOrDefault(),
+                Collection = holyLibraryContext.Collections.Where(x => x.Id == createBorrowRecordDto.CollectionId).FirstOrDefault(),
                 CreateTime = new DateTime(),
                 ExpireTime = new DateTime(),
             };

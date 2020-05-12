@@ -26,7 +26,7 @@ namespace HolyLibraryBackend.Controllers
         [HttpPost]
         public IActionResult Login(LoginDto loginDto)
         {
-            var user = dbContext.Users.Where(user => user.Account == loginDto.Account).FirstOrDefault();
+            var user = dbContext.Users.Where(x => x.Account == loginDto.Account).FirstOrDefault();
             if (user == null || !Argon2.Verify(user.Password, loginDto.Password))
             {
                 return Unauthorized();
@@ -54,7 +54,7 @@ namespace HolyLibraryBackend.Controllers
             ClaimsIdentity identity = (ClaimsIdentity)HttpContext.User.Identity;
             var userId = int.Parse(identity.Claims.First().Value);  // TODO: 怪怪的
 
-            var user = dbContext.Users.Where(user => user.Id == userId).FirstOrDefault();
+            var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
             if (user == null)
             {
                 return Unauthorized();

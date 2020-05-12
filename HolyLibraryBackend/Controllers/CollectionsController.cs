@@ -6,7 +6,7 @@ namespace HolyLibraryBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CollectionsController
+    public class CollectionsController : ControllerBase
     {
         private readonly HolyLibraryContext holyLibraryContext;
 
