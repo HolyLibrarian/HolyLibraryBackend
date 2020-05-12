@@ -6,6 +6,11 @@ namespace HolyLibraryBackend.Models
         public string PhoneNumber { get; set; }
         public int MaxBorrowNumber { get; set; }
 
+        public override string GetIdentification()
+        {
+            return "Reader";
+        }
+
         public override bool BorrowCollection(Collection collection)
         {
             if (collection.IsBorrowed())

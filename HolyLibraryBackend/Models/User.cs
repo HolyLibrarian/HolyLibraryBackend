@@ -7,6 +7,8 @@ namespace HolyLibraryBackend.Models
         public string Password { get; set; }
         public string Name { get; set; }
 
+        public abstract string GetIdentification();
+
         public virtual bool BorrowCollection(Collection collection)
         {
             return false;

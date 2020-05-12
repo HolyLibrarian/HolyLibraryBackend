@@ -49,14 +49,28 @@ namespace HolyLibraryBackend.Controllers
             return Created("", new
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
+                Indentification = user.GetIdentification(),
             });
         }
 
         [HttpGet]
         [Authorize]
-        public IActionResult GetSession()
+        public IActionResult CheckLogin()
         {
-            return Ok();
+            ClaimsIdentity identity = (ClaimsIdentity)HttpContext.User.Identity;
+
+            var userId = int.Parse(identity.Claims.First().Value);
+            var isExist = dbContext.Users.Where(user => user.Id == userId).Count() > 0;
+            if (!isExist)
+            {
+                return Unauthorized();
+            }
+
+            var user = dbContext.Users.Where(user => user.Id == userId).First();
+            return Ok(new
+            {
+                Indentification = user.GetIdentification()
+            });
         }
     }
 }
