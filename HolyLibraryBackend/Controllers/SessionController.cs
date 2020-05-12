@@ -26,14 +26,8 @@ namespace HolyLibraryBackend.Controllers
         [HttpPost]
         public IActionResult Login(LoginDto loginDto)
         {
-            var isExist = dbContext.Users.Where(user => user.Account == loginDto.Account).Count() > 0;
-            if (!isExist)
-            {
-                return Unauthorized();
-            }
-
-            var user = dbContext.Users.Where(user => user.Account == loginDto.Account).First();
-            if (!Argon2.Verify(user.Password, loginDto.Password))
+            var user = dbContext.Users.Where(user => user.Account == loginDto.Account).FirstOrDefault();
+            if (user == null || !Argon2.Verify(user.Password, loginDto.Password))
             {
                 return Unauthorized();
             }
@@ -58,15 +52,14 @@ namespace HolyLibraryBackend.Controllers
         public IActionResult CheckLogin()
         {
             ClaimsIdentity identity = (ClaimsIdentity)HttpContext.User.Identity;
+            var userId = int.Parse(identity.Claims.First().Value);  // TODO: 怪怪的
 
-            var userId = int.Parse(identity.Claims.First().Value);
-            var isExist = dbContext.Users.Where(user => user.Id == userId).Count() > 0;
-            if (!isExist)
+            var user = dbContext.Users.Where(user => user.Id == userId).FirstOrDefault();
+            if (user == null)
             {
                 return Unauthorized();
             }
 
-            var user = dbContext.Users.Where(user => user.Id == userId).First();
             return Ok(new
             {
                 Indentification = user.GetIdentification()
