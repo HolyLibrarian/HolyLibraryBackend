@@ -1,6 +1,8 @@
 using HolyLibraryBackend.Dto;
 using HolyLibraryBackend.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 
 namespace HolyLibraryBackend.Controllers
 {
@@ -8,11 +10,11 @@ namespace HolyLibraryBackend.Controllers
     [Route("[controller]")]
     public class CollectionsController : ControllerBase
     {
-        private readonly HolyLibraryContext holyLibraryContext;
+        private readonly HolyLibraryContext dbContext;
 
         public CollectionsController(HolyLibraryContext holyLibraryContext)
         {
-            this.holyLibraryContext = holyLibraryContext;
+            dbContext = holyLibraryContext;
         }
 
         [HttpPost]
@@ -27,9 +29,20 @@ namespace HolyLibraryBackend.Controllers
                 Price = createCollecitonDto.Price,
                 Location = createCollecitonDto.Location,
             };
-            holyLibraryContext.Add(collection);
-            holyLibraryContext.SaveChanges();
+            dbContext.Add(collection);
+            dbContext.SaveChanges();
             return collection;
+        }
+
+        [HttpGet]
+        public object SearchCollections(string name = null, string author = null, string publisher = null)
+        {
+            var collections = dbContext.Collections
+                .Where(x => x.Name.Contains(name) || name == null)
+                .Where(x => x.Author.Contains(author) || author == null)
+                .Where(x => x.Publisher.Contains(publisher) || publisher == null)
+                .ToList();
+            return Ok(collections);
         }
     }
 }
