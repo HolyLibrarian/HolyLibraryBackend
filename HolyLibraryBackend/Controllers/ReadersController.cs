@@ -2,6 +2,9 @@
 using HolyLibraryBackend.Models;
 using Isopoh.Cryptography.Argon2;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace HolyLibraryBackend.Controllers
 {
@@ -31,6 +34,16 @@ namespace HolyLibraryBackend.Controllers
             dbContext.Add(reader);
             dbContext.SaveChanges();
             return Created(reader.Id.ToString(), reader);
+        }
+
+        public IActionResult GetReader(int userId)
+        {
+            var user = dbContext.Readers.Where(x => x.Id == userId).FirstOrDefault();
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
         }
     }
 }
