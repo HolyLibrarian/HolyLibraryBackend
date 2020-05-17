@@ -22,7 +22,7 @@ namespace HolyLibraryBackend.Test
         }
 
         [Test]
-        public void TestCreateReader()
+        public void TestCreateManager()
         {
             var result = managersController.CreateManager(new CreateManagerDto
             {
@@ -32,7 +32,7 @@ namespace HolyLibraryBackend.Test
         }
 
         [Test]
-        public void TestSearchReaders()
+        public void TestSearchManagers()
         {
             managersController.CreateManager(new CreateManagerDto
             {
@@ -54,7 +54,7 @@ namespace HolyLibraryBackend.Test
         }
 
         [Test]
-        public void TestGetReader()
+        public void TestGetManager()
         {
             managersController.CreateManager(new CreateManagerDto
             {
@@ -65,7 +65,7 @@ namespace HolyLibraryBackend.Test
         }
 
         [Test]
-        public void TestEditReader()
+        public void TestEditManager()
         {
             managersController.CreateManager(new CreateManagerDto
             {
