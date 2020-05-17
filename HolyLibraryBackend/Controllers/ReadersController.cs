@@ -39,42 +39,42 @@ namespace HolyLibraryBackend.Controllers
         [HttpGet]
         public IActionResult SearchReaders(string account = null, string name = null, string email = null, string phoneNumber = null)
         {
-            var users = dbContext.Readers
+            var readers = dbContext.Readers
                 .Where(x => x.Account.Contains(account) || account == null)
                 .Where(x => x.Name.Contains(name) || name == null)
                 .Where(x => x.Email.Contains(email) || email == null)
                 .Where(x => x.PhoneNumber.Contains(phoneNumber) || phoneNumber == null)
                 .ToList();
-            return Ok(users);
+            return Ok(readers);
         }
 
         [HttpGet("{userId}")]
         public IActionResult GetReader(int userId)
         {
-            var user = dbContext.Readers.Where(x => x.Id == userId).FirstOrDefault();
-            if (user == null)
+            var reader = dbContext.Readers.Where(x => x.Id == userId).FirstOrDefault();
+            if (reader == null)
             {
                 return NotFound();
             }
-            return Ok(user);
+            return Ok(reader);
         }
 
         [HttpPut("{userId}")]
         public object EditReader(int userId, EditReaderDto editReaderDto)
         {
-            var user = dbContext.Readers.Where(x => x.Id == userId).FirstOrDefault();
-            if (user == null)
+            var reader = dbContext.Readers.Where(x => x.Id == userId).FirstOrDefault();
+            if (reader == null)
             {
                 return NotFound();
             }
-            user.Account = editReaderDto.Account;
-            user.Password = Argon2.Hash(editReaderDto.Password);
-            user.Name = editReaderDto.Name;
-            user.Email = editReaderDto.Email;
-            user.PhoneNumber = editReaderDto.PhoneNumber;
-            dbContext.Update(user);
+            reader.Account = editReaderDto.Account;
+            reader.Password = Argon2.Hash(editReaderDto.Password);
+            reader.Name = editReaderDto.Name;
+            reader.Email = editReaderDto.Email;
+            reader.PhoneNumber = editReaderDto.PhoneNumber;
+            dbContext.Update(reader);
             dbContext.SaveChanges();
-            return Ok(user);
+            return Ok(reader);
         }
     }
 }
