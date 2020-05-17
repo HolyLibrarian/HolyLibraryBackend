@@ -58,5 +58,23 @@ namespace HolyLibraryBackend.Controllers
             }
             return Ok(user);
         }
+
+        [HttpPut("{userId}")]
+        public object EditReader(int userId, EditReaderDto editReaderDto)
+        {
+            var user = dbContext.Readers.Where(x => x.Id == userId).FirstOrDefault();
+            if (user == null)
+            {
+                return NotFound();
+            }
+            user.Account = editReaderDto.Account;
+            user.Password = Argon2.Hash(editReaderDto.Password);
+            user.Name = editReaderDto.Name;
+            user.Email = editReaderDto.Email;
+            user.PhoneNumber = editReaderDto.PhoneNumber;
+            dbContext.Update(user);
+            dbContext.SaveChanges();
+            return Ok(user);
+        }
     }
 }

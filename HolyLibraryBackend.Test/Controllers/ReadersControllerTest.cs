@@ -63,5 +63,20 @@ namespace HolyLibraryBackend.Test
             var result = readersController.GetReader(1);
             Assert.IsNotNull(result);
         }
+
+        [Test]
+        public void TestEditReader()
+        {
+            readersController.CreateReader(new CreateReaderDto
+            {
+                Password = "",
+            });
+            var result = readersController.EditReader(1, new EditReaderDto
+            {
+                Account = "test",
+                Password = "",
+            });
+            Assert.IsNotNull(result);
+        }
     }
 }
