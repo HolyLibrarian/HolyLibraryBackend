@@ -42,5 +42,13 @@ namespace HolyLibraryBackend.Test
             var result = collectionsController.SearchCollections(name: "456");
             Assert.IsNotNull(result);
         }
+
+        [Test]
+        public void TestGetCollection()
+        {
+            collectionsController.CreateCollection(new CreateCollecitonDto());
+            var result = collectionsController.GetCollection(1);
+            Assert.IsNotNull(result);
+        }
     }
 }

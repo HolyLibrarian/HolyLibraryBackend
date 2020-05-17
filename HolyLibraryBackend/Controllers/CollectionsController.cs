@@ -44,5 +44,16 @@ namespace HolyLibraryBackend.Controllers
                 .ToList();
             return Ok(collections);
         }
+
+        [HttpGet("{collectionId}")]
+        public object GetCollection(int collectionId)
+        {
+            var collection = dbContext.Collections.Where(x => x.Id == collectionId).FirstOrDefault();
+            if (collection == null)
+            {
+                return NotFound();
+            }
+            return Ok(collection);
+        }
     }
 }
