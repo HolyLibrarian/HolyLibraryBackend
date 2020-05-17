@@ -55,5 +55,24 @@ namespace HolyLibraryBackend.Controllers
             }
             return Ok(collection);
         }
+
+        [HttpPut("{collectionId}")]
+        public IActionResult EditCollection(int collectionId, EditCollectionDto editCollectionDto)
+        {
+            var collection = dbContext.Collections.Where(x => x.Id == collectionId).FirstOrDefault();
+            if (collection == null)
+            {
+                return NotFound();
+            }
+            collection.Name = editCollectionDto.Name;
+            collection.Isbn = editCollectionDto.Isbn;
+            collection.Author = editCollectionDto.Author;
+            collection.Publisher = editCollectionDto.Publisher;
+            collection.Price = editCollectionDto.Price;
+            collection.Location = editCollectionDto.Location;
+            dbContext.Update(collection);
+            dbContext.SaveChanges();
+            return Ok(collection);
+        }
     }
 }

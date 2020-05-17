@@ -50,5 +50,16 @@ namespace HolyLibraryBackend.Test
             var result = collectionsController.GetCollection(1);
             Assert.IsNotNull(result);
         }
+
+        [Test]
+        public void TestEditCollection()
+        {
+            collectionsController.CreateCollection(new CreateCollecitonDto());
+            var result = collectionsController.EditCollection(1, new EditCollectionDto
+            {
+                Name = "test",
+            });
+            Assert.IsNotNull(result);
+        }
     }
 }
