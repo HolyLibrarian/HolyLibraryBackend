@@ -24,22 +24,20 @@ namespace HolyLibraryBackend.Test
         [Test]
         public void TestCreateReader()
         {
-            var createReaderDto = new CreateReaderDto
+            var result = readersController.CreateReader(new CreateReaderDto
             {
                 Password = "",
-            };
-            var result = readersController.CreateReader(createReaderDto);
+            });
             Assert.IsNotNull(result);
         }
 
         [Test]
         public void TestGetReader()
         {
-            var createReaderDto = new CreateReaderDto
+            readersController.CreateReader(new CreateReaderDto
             {
                 Password = "",
-            };
-            readersController.CreateReader(createReaderDto);
+            });
             var result = readersController.GetReader(1);
             Assert.IsNotNull(result);
         }
