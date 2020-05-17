@@ -36,6 +36,7 @@ namespace HolyLibraryBackend.Controllers
             return Created(reader.Id.ToString(), reader);
         }
 
+        [HttpGet("{userId}")]
         public IActionResult GetReader(int userId)
         {
             var user = dbContext.Readers.Where(x => x.Id == userId).FirstOrDefault();
