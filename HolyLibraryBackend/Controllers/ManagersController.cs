@@ -24,6 +24,8 @@ namespace HolyLibraryBackend.Controllers
                 Account = createManagerDto.Account,
                 Password = Argon2.Hash(createManagerDto.Password),
                 Name = createManagerDto.Name,
+                Email = createManagerDto.Email,
+                PhoneNumber = createManagerDto.PhoneNumber,
             };
             dbContext.Add(manager);
             dbContext.SaveChanges();
