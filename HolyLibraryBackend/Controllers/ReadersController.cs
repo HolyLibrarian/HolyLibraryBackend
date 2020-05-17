@@ -36,6 +36,18 @@ namespace HolyLibraryBackend.Controllers
             return Created(reader.Id.ToString(), reader);
         }
 
+        [HttpGet]
+        public IActionResult SearchReaders(string account = null, string name = null, string email = null, string phoneNumber = null)
+        {
+            var users = dbContext.Readers
+                .Where(x => x.Account.Contains(account) || account == null)
+                .Where(x => x.Name.Contains(name) || name == null)
+                .Where(x => x.Email.Contains(email) || email == null)
+                .Where(x => x.PhoneNumber.Contains(phoneNumber) || phoneNumber == null)
+                .ToList();
+            return Ok(users);
+        }
+
         [HttpGet("{userId}")]
         public IActionResult GetReader(int userId)
         {

@@ -32,6 +32,28 @@ namespace HolyLibraryBackend.Test
         }
 
         [Test]
+        public void TestSearchReaders()
+        {
+            readersController.CreateReader(new CreateReaderDto
+            {
+                Account = "123456",
+                Password = "",
+                Name = "123456",
+                Email = "123456@ntut.edu.tw",
+            });
+            readersController.CreateReader(new CreateReaderDto
+            {
+                Account = "456789",
+                Password = "",
+                Name = "456789",
+                Email = "456789@ntut.edu.tw",
+            });
+
+            var result = readersController.SearchReaders(account: "456");
+            Assert.IsNotNull(result);
+        }
+
+        [Test]
         public void TestGetReader()
         {
             readersController.CreateReader(new CreateReaderDto
