@@ -10,11 +10,11 @@ namespace HolyLibraryBackend.Controllers
     [Route("[controller]")]
     public class BorrowRecordsController : ControllerBase
     {
-        private readonly HolyLibraryContext holyLibraryContext;
+        private readonly HolyLibraryContext dbContext;
 
         public BorrowRecordsController(HolyLibraryContext holyLibraryContext)
         {
-            this.holyLibraryContext = holyLibraryContext;
+            dbContext = holyLibraryContext;
         }
 
         [HttpPost]
@@ -22,13 +22,13 @@ namespace HolyLibraryBackend.Controllers
         {
             var borrowRecord = new BorrowRecord
             {
-                User = holyLibraryContext.Users.Where(x => x.Id == createBorrowRecordDto.UserId).FirstOrDefault(),
-                Collection = holyLibraryContext.Collections.Where(x => x.Id == createBorrowRecordDto.CollectionId).FirstOrDefault(),
+                User = dbContext.Users.Where(x => x.Id == createBorrowRecordDto.UserId).FirstOrDefault(),
+                Collection = dbContext.Collections.Where(x => x.Id == createBorrowRecordDto.CollectionId).FirstOrDefault(),
                 CreateTime = new DateTime(),
                 ExpireTime = new DateTime(),
             };
-            holyLibraryContext.Add(borrowRecord);
-            holyLibraryContext.SaveChanges();
+            dbContext.Add(borrowRecord);
+            dbContext.SaveChanges();
             return borrowRecord;
         }
     }
