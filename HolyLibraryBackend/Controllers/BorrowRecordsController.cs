@@ -8,11 +8,11 @@ namespace HolyLibraryBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class BorrowRecordController : ControllerBase
+    public class BorrowRecordsController : ControllerBase
     {
         private readonly HolyLibraryContext holyLibraryContext;
 
-        public BorrowRecordController(HolyLibraryContext holyLibraryContext)
+        public BorrowRecordsController(HolyLibraryContext holyLibraryContext)
         {
             this.holyLibraryContext = holyLibraryContext;
         }

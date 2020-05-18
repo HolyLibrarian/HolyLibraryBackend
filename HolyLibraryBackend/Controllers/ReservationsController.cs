@@ -8,11 +8,11 @@ namespace HolyLibraryBackend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ReservationController : ControllerBase
+    public class ReservationsController : ControllerBase
     {
         private readonly HolyLibraryContext holyLibraryContext;
 
-        public ReservationController(HolyLibraryContext holyLibraryContext)
+        public ReservationsController(HolyLibraryContext holyLibraryContext)
         {
             this.holyLibraryContext = holyLibraryContext;
         }
