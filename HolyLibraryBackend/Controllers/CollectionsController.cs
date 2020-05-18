@@ -18,7 +18,7 @@ namespace HolyLibraryBackend.Controllers
         }
 
         [HttpPost]
-        public Collection CreateCollection(CreateCollecitonDto createCollecitonDto)
+        public IActionResult CreateCollection(CreateCollecitonDto createCollecitonDto)
         {
             var collection = new Collection
             {
@@ -31,11 +31,11 @@ namespace HolyLibraryBackend.Controllers
             };
             dbContext.Add(collection);
             dbContext.SaveChanges();
-            return collection;
+            return Created(collection.Id.ToString(), collection);
         }
 
         [HttpGet]
-        public object SearchCollections(string name = null, string author = null, string publisher = null)
+        public IActionResult SearchCollections(string name = null, string author = null, string publisher = null)
         {
             var collections = dbContext.Collections
                 .Where(x => x.Name.Contains(name) || name == null)
@@ -46,7 +46,7 @@ namespace HolyLibraryBackend.Controllers
         }
 
         [HttpGet("{collectionId}")]
-        public object GetCollection(int collectionId)
+        public IActionResult GetCollection(int collectionId)
         {
             var collection = dbContext.Collections.Where(x => x.Id == collectionId).FirstOrDefault();
             if (collection == null)
