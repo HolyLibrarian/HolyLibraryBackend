@@ -9,12 +9,7 @@ namespace HolyLibraryBackend.Models
 
         public override bool CreateBorrowRecord(User user, Collection collection)
         {
-            if (collection.IsBorrowed())
-            {
-                return false;
-            }
-            collection.Borrower = user;
-            return true;
+            return user.BorrowCollection(collection);
         }
 
         public override bool MarkBorrowRecordAsReturned(Collection collection)
