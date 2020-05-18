@@ -35,5 +35,28 @@ namespace HolyLibraryBackend.Test
             collection.Borrower = reader;
             Assert.IsTrue(reader.ReturnCollection(collection));
         }
+
+        [Test]
+        public void TestCreateBorrowRecord()
+        {
+            Collection collection = new Collection();
+            Assert.IsFalse(reader.CreateBorrowRecord(manager, collection));
+            Assert.IsTrue(manager.CreateBorrowRecord(reader, collection));
+            Assert.IsFalse(manager.CreateBorrowRecord(reader, collection));
+        }
+
+        [Test]
+        public void TestMarkBorrowRecordAsReturned()
+        {
+            Collection collection = new Collection();
+            Assert.IsFalse(manager.MarkBorrowRecordAsReturned(collection));
+            Assert.IsFalse(reader.MarkBorrowRecordAsReturned(collection));
+            collection.Borrower = new Reader();
+            Assert.IsTrue(manager.MarkBorrowRecordAsReturned(collection));
+            Assert.IsFalse(reader.MarkBorrowRecordAsReturned(collection));
+            collection.Borrower = reader;
+            Assert.IsTrue(manager.MarkBorrowRecordAsReturned(collection));
+            Assert.IsFalse(reader.MarkBorrowRecordAsReturned(collection));
+        }
     }
 }

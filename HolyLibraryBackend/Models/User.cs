@@ -20,5 +20,15 @@ namespace HolyLibraryBackend.Models
         {
             return false;
         }
+
+        public virtual bool CreateBorrowRecord(User user, Collection collection)
+        {
+            return false;
+        }
+
+        public virtual bool MarkBorrowRecordAsReturned(Collection collection)
+        {
+            return false;
+        }
     }
 }
