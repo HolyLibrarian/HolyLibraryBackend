@@ -18,18 +18,34 @@ namespace HolyLibraryBackend.Controllers
         }
 
         [HttpPost]
-        public BorrowRecord Post(CreateBorrowRecordDto createBorrowRecordDto)
+        public IActionResult CreateBorrowRecord(CreateBorrowRecordDto createBorrowRecordDto)
         {
+            var user = dbContext.Users.Where(x => x.Id == createBorrowRecordDto.UserId).FirstOrDefault();
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var collection = dbContext.Collections.Where(x => x.Id == createBorrowRecordDto.CollectionId).FirstOrDefault();
+            if (collection == null)
+            {
+                return NotFound();
+            }
+            if (collection.IsBorrowed())
+            {
+                return Forbid();
+            }
             var borrowRecord = new BorrowRecord
             {
-                User = dbContext.Users.Where(x => x.Id == createBorrowRecordDto.UserId).FirstOrDefault(),
-                Collection = dbContext.Collections.Where(x => x.Id == createBorrowRecordDto.CollectionId).FirstOrDefault(),
-                CreateTime = new DateTime(),
-                ExpireTime = new DateTime(),
+                User = user,
+                Collection = collection,
+                CreateTime = DateTime.Now,
+                ExpireTime = DateTime.Now.AddDays(createBorrowRecordDto.ExpireDays),
             };
             dbContext.Add(borrowRecord);
+            user.BorrowCollection(collection);
+            dbContext.Update(collection);
             dbContext.SaveChanges();
-            return borrowRecord;
+            return Created(borrowRecord.Id.ToString(), borrowRecord);
         }
     }
 }
