@@ -44,6 +44,7 @@ namespace HolyLibraryBackend.Controllers
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Indentification = user.GetIdentification(),
+                Id = user.Id,
             });
         }
 
@@ -62,7 +63,8 @@ namespace HolyLibraryBackend.Controllers
 
             return Ok(new
             {
-                Indentification = user.GetIdentification()
+                Indentification = user.GetIdentification(),
+                Id = user.Id,
             });
         }
     }
