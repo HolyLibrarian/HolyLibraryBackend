@@ -39,7 +39,10 @@ namespace HolyLibraryBackend.Test
                 CollectionId = 1,
                 ExpireDays = 7,
             });
-            Assert.IsNotNull(result);
+            var borrowRecord = (result as Microsoft.AspNetCore.Mvc.CreatedResult).Value as BorrowRecord;
+            Assert.AreEqual(1, borrowRecord.User.Id);
+            Assert.AreEqual(1, borrowRecord.Collection.Id);
+            Assert.AreEqual(7, (borrowRecord.ExpireTime - borrowRecord.CreateTime).Days);
         }
     }
 }
