@@ -44,6 +44,7 @@ namespace HolyLibraryBackend.Controllers
                 .Where(x => x.Name.Contains(name) || name == null)
                 .Where(x => x.Email.Contains(email) || email == null)
                 .Where(x => x.PhoneNumber.Contains(phoneNumber) || phoneNumber == null)
+                .Where(x => x.Deleteflag.Equals(false))
                 .ToList();
             return Ok(readers);
         }
@@ -72,6 +73,20 @@ namespace HolyLibraryBackend.Controllers
             reader.Name = editReaderDto.Name;
             reader.Email = editReaderDto.Email;
             reader.PhoneNumber = editReaderDto.PhoneNumber;
+            dbContext.Update(reader);
+            dbContext.SaveChanges();
+            return Ok(reader);
+        }
+
+        [HttpDelete("{userId}")]
+        public object DeleteReader(int userId)
+        {
+            var reader = dbContext.Readers.Where(x => x.Id == userId).FirstOrDefault();
+            if (reader == null)
+            {
+                return NotFound();
+            }
+            reader.Deleteflag = true;
             dbContext.Update(reader);
             dbContext.SaveChanges();
             return Ok(reader);
