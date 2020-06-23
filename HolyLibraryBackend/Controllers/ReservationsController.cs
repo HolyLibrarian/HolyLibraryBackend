@@ -37,16 +37,35 @@ namespace HolyLibraryBackend.Controllers
             {
                 return Forbid();
             }
+            var userReservation = dbContext.Reservations
+                .Where(x => x.User == user)
+                .Where(x => x.Collection == collection )
+                .Where(x => x.IsCanceled.Equals(false))
+                .Include(x => x.User)
+                .Include(x => x.Collection)
+                .SingleOrDefault();
+
+            if(userReservation != null)
+            {
+                return NotFound();
+            }
+
+            var lastBorrowRecord = dbContext.BorrowRecords
+                .Where(x => x.User == user || user == null)
+                .Where(x => x.Collection == collection || collection == null)
+                .Include(x => x.User)
+                .Include(x => x.Collection)
+                .OrderBy(x => x.ExpireTime)
+                .SingleOrDefault();
+
             var reservation = new Reservation
             {
                 User = user,
                 Collection = collection,
                 CreateTime = DateTime.Now,
-                ExpireTime = DateTime.Now.AddDays(createReservationDto.ExpireDays),
+                ExpireTime = lastBorrowRecord.ExpireTime.AddDays(createReservationDto.ExpireDays),
             };
             dbContext.Add(reservation);
-            user.BorrowCollection(collection);
-            dbContext.Update(collection);
             dbContext.SaveChanges();
             return Created(reservation.Id.ToString(), reservation);
         }
@@ -55,10 +74,9 @@ namespace HolyLibraryBackend.Controllers
         public IActionResult SearchReservation(int userId, int collectionId)
         {
             var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
-            var collection = dbContext.Collections.Where(x => x.Id == collectionId).FirstOrDefault();
             var reservations = dbContext.Reservations
                 .Where(x => x.User == user || user == null)
-                .Where(x => x.Collection == collection || collection == null)
+                .Where(x => x.IsCanceled.Equals(false))
                 .Include(x => x.User)
                 .Include(x => x.Collection)
                 .ToList();
