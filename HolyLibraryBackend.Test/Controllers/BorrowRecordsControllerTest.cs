@@ -3,7 +3,6 @@ using NUnit.Framework;
 using HolyLibraryBackend.Controllers;
 using HolyLibraryBackend.Dto;
 using HolyLibraryBackend.Models;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace HolyLibraryBackend.Test
 {
