@@ -68,8 +68,14 @@ namespace HolyLibraryBackend.Controllers
             {
                 return NotFound();
             }
-            reader.Account = editReaderDto.Account;
-            reader.Password = Argon2.Hash(editReaderDto.Password);
+            if (string.IsNullOrEmpty(reader.Account))
+            {
+                reader.Account = editReaderDto.Account;
+            }
+            if(string.IsNullOrEmpty(reader.Password))
+            {
+                reader.Password = Argon2.Hash(editReaderDto.Password);
+            }
             reader.Name = editReaderDto.Name;
             reader.Email = editReaderDto.Email;
             reader.PhoneNumber = editReaderDto.PhoneNumber;
