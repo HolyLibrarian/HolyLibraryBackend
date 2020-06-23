@@ -11,6 +11,8 @@ namespace HolyLibraryBackend.Models
         public string Location { get; set; }
         public User Borrower { get; set; }
 
+        public bool DeleteFlag { get; set; }
+
         public bool IsBorrowed()
         {
             return Borrower != null;

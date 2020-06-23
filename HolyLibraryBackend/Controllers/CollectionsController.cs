@@ -41,6 +41,7 @@ namespace HolyLibraryBackend.Controllers
                 .Where(x => x.Name.Contains(name) || name == null)
                 .Where(x => x.Author.Contains(author) || author == null)
                 .Where(x => x.Publisher.Contains(publisher) || publisher == null)
+                .Where(x => x.DeleteFlag.Equals(false))
                 .ToList();
             return Ok(collections);
         }
@@ -70,6 +71,20 @@ namespace HolyLibraryBackend.Controllers
             collection.Publisher = editCollectionDto.Publisher;
             collection.Price = editCollectionDto.Price;
             collection.Location = editCollectionDto.Location;
+            dbContext.Update(collection);
+            dbContext.SaveChanges();
+            return Ok(collection);
+        }
+
+        [HttpDelete("{collectionId}")]
+        public object DeleteCollection(int collectionId)
+        {
+            var collection = dbContext.Collections.Where(x => x.Id == collectionId).FirstOrDefault();
+            if (collection == null)
+            {
+                return NotFound();
+            }
+            collection.DeleteFlag = true;
             dbContext.Update(collection);
             dbContext.SaveChanges();
             return Ok(collection);
