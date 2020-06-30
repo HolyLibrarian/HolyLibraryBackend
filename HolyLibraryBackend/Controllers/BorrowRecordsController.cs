@@ -50,7 +50,7 @@ namespace HolyLibraryBackend.Controllers
         }
 
         [HttpGet]
-        public IActionResult SearchBorrowRecords(int userId, int collectionId)
+        public IActionResult SearchBorrowRecords(int? userId, int? collectionId)
         {
             var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
             var collection = dbContext.Collections.Where(x => x.Id == collectionId).FirstOrDefault();

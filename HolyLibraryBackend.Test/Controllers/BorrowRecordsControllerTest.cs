@@ -43,5 +43,31 @@ namespace HolyLibraryBackend.Test
             Assert.AreEqual(1, borrowRecord.Collection.Id);
             Assert.AreEqual(7, (borrowRecord.ExpireTime - borrowRecord.CreateTime).Days);
         }
+
+        [Test]
+        public void TestSearchBorrowRecords()
+        {
+            readersController.CreateReader(new CreateReaderDto
+            {
+                Password = ""
+            });
+            collectionsController.CreateCollection(new CreateCollecitonDto());
+            collectionsController.CreateCollection(new CreateCollecitonDto());
+            borrowRecordsController.CreateBorrowRecord(new CreateBorrowRecordDto
+            {
+                UserId = 1,
+                CollectionId = 1,
+                ExpireDays = 7,
+            });
+            borrowRecordsController.CreateBorrowRecord(new CreateBorrowRecordDto
+            {
+                UserId = 1,
+                CollectionId = 2,
+                ExpireDays = 7,
+            });
+            var result = borrowRecordsController.SearchBorrowRecords(1, null);
+            var borrowRecords = (result as Microsoft.AspNetCore.Mvc.OkObjectResult).Value;
+            Assert.NotNull(borrowRecords);
+        }
     }
 }
