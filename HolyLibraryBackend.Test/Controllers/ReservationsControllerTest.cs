@@ -43,6 +43,32 @@ namespace HolyLibraryBackend.Test
             Assert.AreEqual(1, reservation.Collection.Id);
             Assert.AreEqual(7, (reservation.ExpireTime - reservation.CreateTime).Days);
         }
+
+        [Test]
+        public void TestSearchReservation()
+        {
+            readersController.CreateReader(new CreateReaderDto
+            {
+                Password = ""
+            });
+            collectionsController.CreateCollection(new CreateCollecitonDto());
+            collectionsController.CreateCollection(new CreateCollecitonDto());
+            reservationsController.CreateReservation(new CreateReservationDto
+            {
+                UserId = 1,
+                CollectionId = 1,
+                ExpireDays = 7,
+            });
+            reservationsController.CreateReservation(new CreateReservationDto
+            {
+                UserId = 1,
+                CollectionId = 2,
+                ExpireDays = 7,
+            });
+            var result = reservationsController.SearchReservation(1, null);
+            var reservations = (result as Microsoft.AspNetCore.Mvc.OkObjectResult).Value;
+            Assert.NotNull(reservations);
+        }
     }
 }
 

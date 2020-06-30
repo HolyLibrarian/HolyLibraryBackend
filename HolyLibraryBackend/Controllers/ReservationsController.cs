@@ -71,7 +71,7 @@ namespace HolyLibraryBackend.Controllers
         }
 
         [HttpGet]
-        public IActionResult SearchReservation(int userId, int collectionId)
+        public IActionResult SearchReservation(int? userId, int? collectionId)
         {
             var user = dbContext.Users.Where(x => x.Id == userId).FirstOrDefault();
             var reservations = dbContext.Reservations
