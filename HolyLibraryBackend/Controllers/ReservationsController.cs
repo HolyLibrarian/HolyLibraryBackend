@@ -63,7 +63,7 @@ namespace HolyLibraryBackend.Controllers
                 User = user,
                 Collection = collection,
                 CreateTime = DateTime.Now,
-                ExpireTime = lastBorrowRecord.ExpireTime.AddDays(createReservationDto.ExpireDays),
+                ExpireTime = DateTime.Now.AddDays(createReservationDto.ExpireDays),
             };
             dbContext.Add(reservation);
             dbContext.SaveChanges();
